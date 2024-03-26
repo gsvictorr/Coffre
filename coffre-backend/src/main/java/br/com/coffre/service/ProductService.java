@@ -1,8 +1,11 @@
 package br.com.coffre.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.coffre.dto.product.ProductAlterRequest;
 import br.com.coffre.dto.product.ProductRequest;
 import br.com.coffre.dto.product.ProductResponse;
 import br.com.coffre.exception.company.CompanyException;
@@ -23,9 +26,23 @@ public class ProductService {
 
     @Autowired
     private TokenService tokenService;
-    
 
-        public ProductResponse saveProduct(ProductRequest productRequest, String token) {
+    public List<ProductResponse> listAllProducts(String token) {
+
+        Long companyId = tokenService.getCompanyIdFromToken(token);
+
+        if (companyId == null) {
+            throw new CompanyException("O ID da empresa não pode ser nulo.");
+        }
+
+        Company company = companyRepository.findById(companyId)
+                .orElseThrow(() -> new CompanyException("Empresa não encontrada para o ID fornecido."));
+
+        List<ProductResponse> products = productRepository.findAllByCompany(company).stream().map(ProductResponse::new).toList();
+        return products;
+    }
+
+    public ProductResponse saveProduct(ProductRequest productRequest, String token) {
 
         Long companyId = tokenService.getCompanyIdFromToken(token);
 
@@ -39,14 +56,43 @@ public class ProductService {
         try {
 
             Product newProduct = productRequest.convert(productRequest);
-            
-            if (productRepository.findByName(newProduct.getName()) != null) {
+            if (productRepository.findByNameAndCompany(newProduct.getName(), company) != null) {
                 throw new ProductException("Produto já cadastrado!");
-
             } else {
                 newProduct.setCompany(company);
                 productRepository.save(newProduct);
-                ProductResponse productResponse = new ProductResponse(newProduct.getId(), newProduct.getName(), newProduct.getPrice(), newProduct.getAmount(), newProduct.getCompany());
+                ProductResponse productResponse = new ProductResponse(newProduct);
+                return productResponse;
+            }
+        } catch (ProductException e) {
+            throw new ProductException(e.getMessage());
+        }
+    }
+
+    public ProductResponse alterProduct(ProductAlterRequest productAlterRequest, String token) {
+
+        Long companyId = tokenService.getCompanyIdFromToken(token);
+
+        if (companyId == null) {
+            throw new CompanyException("O ID da empresa não pode ser nulo.");
+        }
+
+        Product alterProduct = productAlterRequest.convert(productAlterRequest);
+
+        Company company = companyRepository.findById(companyId)
+                .orElseThrow(() -> new CompanyException("Empresa não encontrada para o ID fornecido."));
+
+        Product searchId = productRepository.findById(alterProduct.getId())
+                .orElseThrow(() -> new ProductException("ID do produto não encontrado"));
+
+        try {
+            if (productRepository.findByNameAndCompany(alterProduct.getName(), company) != null) {
+                throw new ProductException("Produto já cadastrado!");
+            } else {
+
+                alterProduct.setCompany(company);
+                productRepository.saveAndFlush(alterProduct);
+                ProductResponse productResponse = new ProductResponse(alterProduct);
                 return productResponse;
             }
         } catch (ProductException e) {
