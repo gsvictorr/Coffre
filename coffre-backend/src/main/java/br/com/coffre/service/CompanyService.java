@@ -15,18 +15,18 @@ public class CompanyService {
     @Autowired
     private CompanyRepository companyRepository;
 
-    public CompanyResponse registerCompany (CompanyRequest companyRequest){
+    public CompanyResponse registerCompany(CompanyRequest companyRequest) {
 
-        Company newCompany = new CompanyRequest(companyRequest.name(), companyRequest.email()).convert(companyRequest);
+        Company newCompany = companyRequest.convert(companyRequest);
 
         if (companyRepository.findByName(newCompany.getName()) != null) {
             throw new RegisterException("Essa empresa já está cadastrada.");
         } else {
             newCompany.setEnabled(true);
             companyRepository.save(newCompany);
-             CompanyResponse companyResponse = new CompanyResponse(newCompany.getId(), newCompany.getName(), newCompany.getEmail());
-                    return companyResponse;
+            CompanyResponse companyResponse = new CompanyResponse(newCompany);
+            return companyResponse;
         }
     }
-    
+
 }
