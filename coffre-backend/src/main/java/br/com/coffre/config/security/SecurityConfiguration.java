@@ -46,6 +46,7 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.GET, "/api/product").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/product").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/product").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/product/{id}").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling(exceptionHandling -> exceptionHandling.accessDeniedHandler(customAccessDeniedHandler))
