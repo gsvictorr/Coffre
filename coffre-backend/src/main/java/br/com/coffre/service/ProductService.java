@@ -38,7 +38,8 @@ public class ProductService {
         Company company = companyRepository.findById(companyId)
                 .orElseThrow(() -> new CompanyException("Empresa não encontrada para o ID fornecido."));
 
-        List<ProductResponse> products = productRepository.findAllByCompany(company).stream().map(ProductResponse::new).toList();
+        List<ProductResponse> products = productRepository.findAllByCompany(company).stream().map(ProductResponse::new)
+                .toList();
         return products;
     }
 
@@ -82,8 +83,9 @@ public class ProductService {
         Company company = companyRepository.findById(companyId)
                 .orElseThrow(() -> new CompanyException("Empresa não encontrada para o ID fornecido."));
 
-        Product searchId = productRepository.findById(alterProduct.getId())
-                .orElseThrow(() -> new ProductException("ID do produto não encontrado"));
+        if (productRepository.findByIdAndCompany(alterProduct.getId(), company) == null) {
+            throw new ProductException("Produto com esse ID não foi localizado.");
+        }
 
         try {
             if (productRepository.findByNameAndCompany(alterProduct.getName(), company) != null) {
@@ -98,5 +100,16 @@ public class ProductService {
         } catch (ProductException e) {
             throw new ProductException(e.getMessage());
         }
+    }
+
+    @SuppressWarnings("unused")
+    public void deleteProduct(Long id) {
+
+        if (productRepository.findById(id) == null) {
+            throw new ProductException("Produto com esse ID não foi localizado.");
+        } else{
+            productRepository.deleteById(id);
+        }
+
     }
 }

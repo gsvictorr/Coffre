@@ -20,18 +20,18 @@ import br.com.coffre.exception.user.RegisterException;
 @RestControllerAdvice
 public class GlobalException {
 
-    // ValidException
-    @ResponseStatus(HttpStatus.CONFLICT)
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public Map<String, String> validException(MethodArgumentNotValidException ex) {
-        Map<String, String> error = new HashMap<>();
-        ex.getBindingResult().getAllErrors().forEach((errors) -> {
-            String value = ((FieldError) errors).getField();
-            String message = errors.getDefaultMessage();
-            error.put(value, message);
-        });
-        return error;
-    }
+     // ValidException
+     @ResponseStatus(HttpStatus.CONFLICT)
+     @ExceptionHandler(MethodArgumentNotValidException.class)
+     public Map<String, String> validException(MethodArgumentNotValidException ex){
+         Map<String, String> error = new HashMap<>();
+         ex.getBindingResult().getAllErrors().forEach((errors) -> {
+             String value = ((FieldError) errors).getField();
+             String message = errors.getDefaultMessage();
+             error.put(value, message);
+         });
+         return error;
+     }
 
     // LoginException
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
@@ -77,6 +77,8 @@ public class GlobalException {
         errorsMap.put("error", ex.getMessage());
         return errorsMap;
     }
+
+    
 
     // AuthenticationException
     @ResponseStatus(HttpStatus.FORBIDDEN)
