@@ -18,8 +18,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity(name = "users")
-@Table(name = "users")
+@Entity(name = "user")
+@Table(name = "user")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
