@@ -14,24 +14,25 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import br.com.coffre.exception.auth.LoginException;
 import br.com.coffre.exception.company.CompanyException;
+import br.com.coffre.exception.notification.NotificationException;
 import br.com.coffre.exception.product.ProductException;
 import br.com.coffre.exception.user.RegisterException;
 
 @RestControllerAdvice
 public class GlobalException {
 
-     // ValidException
-     @ResponseStatus(HttpStatus.CONFLICT)
-     @ExceptionHandler(MethodArgumentNotValidException.class)
-     public Map<String, String> validException(MethodArgumentNotValidException ex){
-         Map<String, String> error = new HashMap<>();
-         ex.getBindingResult().getAllErrors().forEach((errors) -> {
-             String value = ((FieldError) errors).getField();
-             String message = errors.getDefaultMessage();
-             error.put(value, message);
-         });
-         return error;
-     }
+    // ValidException
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public Map<String, String> validException(MethodArgumentNotValidException ex) {
+        Map<String, String> error = new HashMap<>();
+        ex.getBindingResult().getAllErrors().forEach((errors) -> {
+            String value = ((FieldError) errors).getField();
+            String message = errors.getDefaultMessage();
+            error.put(value, message);
+        });
+        return error;
+    }
 
     // LoginException
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
@@ -69,6 +70,15 @@ public class GlobalException {
         return errorsMap;
     }
 
+    // NotificationException
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(NotificationException.class)
+    public Map<String, String> notificationException(NotificationException ex) {
+        Map<String, String> errorsMap = new HashMap<String, String>();
+        errorsMap.put("error", ex.getMessage());
+        return errorsMap;
+    }
+
     // AccessDeniedException
     @ResponseStatus(HttpStatus.FORBIDDEN)
     @ExceptionHandler(AccessDeniedException.class)
@@ -77,8 +87,6 @@ public class GlobalException {
         errorsMap.put("error", ex.getMessage());
         return errorsMap;
     }
-
-    
 
     // AuthenticationException
     @ResponseStatus(HttpStatus.FORBIDDEN)

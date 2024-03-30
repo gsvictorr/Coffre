@@ -1,8 +1,12 @@
 package br.com.coffre.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import br.com.coffre.dto.product.ProductAlterRequest;
@@ -26,6 +30,9 @@ public class ProductService {
 
     @Autowired
     private TokenService tokenService;
+
+    @Autowired
+    private NotificationService notificationService;
 
     public List<ProductResponse> listAllProducts(String token) {
 
@@ -88,27 +95,35 @@ public class ProductService {
         }
 
         try {
-            if (productRepository.findByNameAndCompany(alterProduct.getName(), company) != null) {
-                throw new ProductException("Produto já cadastrado!");
-            } else {
-
+             if(alterProduct.getAmount() < 4){
+                Map<String, Object> emailContent = new HashMap<>();
+                emailContent.put("product", alterProduct.getName());
+                CompletableFuture.runAsync(() -> {
+                notificationService.sendNotification("AVISO: Produto acabando!", "O produto " + alterProduct.getName() + " está acabando.", emailContent, company);
+                });
+            } 
                 alterProduct.setCompany(company);
                 productRepository.saveAndFlush(alterProduct);
                 ProductResponse productResponse = new ProductResponse(alterProduct);
                 return productResponse;
-            }
+
         } catch (ProductException e) {
             throw new ProductException(e.getMessage());
         }
     }
 
-    @SuppressWarnings("unused")
+    
     public void deleteProduct(Long id) {
 
-        if (productRepository.findById(id) == null) {
-            throw new ProductException("Produto com esse ID não foi localizado.");
-        } else{
-            productRepository.deleteById(id);
+        try {
+            if(id == null){
+                throw new ProductException("ID do produto não pode ser nulo.");
+            } else{
+                productRepository.deleteById(id);
+            }
+            
+        } catch (ProductException e) {
+            throw new ProductException("Produto com esse ID não foi localizado ou já foi excluido.");
         }
 
     }

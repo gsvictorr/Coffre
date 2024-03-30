@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style type="text/css">
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;500&display=swap');
+
+    * {
+        font-family: 'Roboto', sans-serif;
+        text-align: center;
+        box-sizing: border-box;
+        list-style: none;
+        text-decoration: none;
+    }
+
+    h1 {
+        background-color: #fff;
+        padding: 10px;
+        color: #005502;
+        border-radius: 10px;
+        font-size: 1.1rem;
+    }
+
+    h2 {
+        font-weight: 400;
+        font-size: 0.9rem;
+    }
+    .info {
+        color: #363636;
+        font-size: 0.8rem;
+    }
+
+    p{
+        font-size: 1rem;
+    }
+
+    .product{
+        text-transform: uppercase;
+        color: #005502;
+    }
+
+    .team-coffre {
+        font-weight: bold;
+        color: #005502;
+        font-size: 0.8rem;
+    }
+</style>
+</head>
+
+<body>
+    <div>
+        <h1>Coffre</h1>
+        <h2>${product} ESTÁ ACABANDO!</h2>
+        <br>
+        <p>O produto <p class="product">${product}</p> está acabando, por favor, verifique a disponibilidade e <br>não esqueça de reabastecer seu estoque.</p>
+        <br>
+        <p class="info">Email enviado automaticamente, favor não responder</p>
+        <p class="team-coffre">Equipe Coffre.</p>
+    </div>
+</body>
+
+</html>
