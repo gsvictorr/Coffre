@@ -1,8 +1,11 @@
+import { LoginForm } from "@/components/login-form";
+import Sidebar from "@/components/sidebar";
+
 
 export default function Home() {
   return (
-    <>
-    <h1>Funcionando</h1>
-    </>
+    <main>
+      <LoginForm></LoginForm>
+    </main>
   );
 }
