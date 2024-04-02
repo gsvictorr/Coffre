@@ -1,10 +1,11 @@
-import ThemeSwitcher from "@/components/ui/theme-switcher";
+import { LoginForm } from "@/components/login-form";
+import Sidebar from "@/components/sidebar";
+
 
 export default function Home() {
   return (
-    <>
-    <h1>Funcionando</h1>
-    <ThemeSwitcher></ThemeSwitcher>
-    </>
+    <main>
+      <LoginForm></LoginForm>
+    </main>
   );
 }
