@@ -12,17 +12,17 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from "../ui/form"
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { Loader2 } from "lucide-react";
-import { LoginResponseType } from "@/api/auth/login/route";
+import { Loader2, SquareArrowRight } from "lucide-react";
+import { LoginResponseType } from "@/app/api/auth/login/route";
 
 const loginFormSchema = z.object({
-    email: z.string().email({message: "Insira um email válido."}).min(10, {message: "Insira um email com no mínimo 10 caracteres."}),
-    password: z.string().min(8, {message: "Insira uma senha com no mínimo 8 caracteres."})
+    email: z.string().email({ message: "Insira um email válido." }).min(10, { message: "Insira um email com no mínimo 10 caracteres." }),
+    password: z.string().min(8, { message: "Insira uma senha com no mínimo 8 caracteres." })
 });
 
 type LoginFormType = z.infer<typeof loginFormSchema>;
 
-export function LoginForm(){
+export function LoginForm() {
 
     const [loading, setLoading] = useState(false);
 
@@ -40,7 +40,7 @@ export function LoginForm(){
         }
     });
 
-    async function clickLogin({ email, password }: LoginFormType){
+    async function clickLogin({ email, password }: LoginFormType) {
         setLoading(true);
         const data = JSON.stringify({
             email, password
@@ -49,22 +49,22 @@ export function LoginForm(){
         try {
             const result = await frontendAPI.post("/auth/login", data);
 
-            const {token, error} = result.data as LoginResponseType;
+            const { token, error } = result.data as LoginResponseType;
 
-            if(token){
+            if (token) {
                 authContext.signIn(token);
                 router.push("/dashboard");
 
-            } else{
+            } else {
                 const message = <CustomAlert
-                type={CustomAlertType.ERROR}
-                title="Erro ao logar-se!"
-                message={error || "Erro desconhecido."}
+                    type={CustomAlertType.ERROR}
+                    title="Erro ao logar-se!"
+                    message={error || "Erro desconhecido."}
                 >
                 </CustomAlert>;
                 setMessage(message);
             }
-            
+
         } catch (e) {
 
             const message = <CustomAlert
@@ -73,21 +73,21 @@ export function LoginForm(){
                 message="API fora do ar, tente novamente mais tarde!"
             />;
 
-            setMessage(message);    
-        } finally{
+            setMessage(message);
+        } finally {
             setLoading(false);
             setTimeout(() => setMessage(<></>), 3500);
         }
 
     };
 
-    return(
+    return (
         <>
             <div className="flex items-center h-screen">
                 <div className="container space-y-2 p-8 max-w-md rounded-xl shadow-md dark:bg-zinc-900">
                     <span className="flex items-center justify-center">
                         <h1 className="font-bold text-principal text-3xl">Coffre</h1>
-                        </span>
+                    </span>
                     <span className='flex justify-center text-md'>Realize seu login</span>
                     <Form{...loginForm}>
                         <form onSubmit={loginForm.handleSubmit(clickLogin)}>
@@ -100,7 +100,7 @@ export function LoginForm(){
                                         <FormItem className="mb-2">
                                             <Label htmlFor='text' className='font-bold text-sm'>Email</Label>
                                             <FormControl>
-                                                <Input type='text' placeholder='Digite seu email' className='rounded-none border-2 border-s-principal'  {...field} />
+                                                <Input type='text' placeholder='Digite seu email' className='rounded-none border-l-4 border-l-principal'  {...field} />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -117,7 +117,7 @@ export function LoginForm(){
                                         <FormItem>
                                             <Label htmlFor='password' className='font-bold text-sm'>Senha</Label>
                                             <FormControl>
-                                                <Input type='password' placeholder='Digite sua senha' className='rounded-none border-2 border-s-principal' {...field} />
+                                                <Input type='password' placeholder='Digite sua senha' className='rounded-none border-l-4 border-l-principal' {...field} />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -126,7 +126,14 @@ export function LoginForm(){
                                 }}
                             />
                             <div className='flex justify-end'>
-                            <Button type="submit" className='bg-principal mt-5 text-slate-50 font-normal rounded-none' disabled={loading}>{loading ? <Loader2 className="animate-spin h-5 w-5 "/> : "Login"}</Button>
+                                <Button type="submit" className='bg-principal mt-5 text-slate-50 font-normal rounded-none' disabled={loading}>
+                                    {loading ? <Loader2 className="animate-spin h-5 w-5" /> : (
+                                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                                            <span>Login</span>
+                                            <SquareArrowRight className="ml-2 size-4" />
+                                        </div>
+                                    )}
+                                </Button>
                             </div>
                         </form>
                     </Form>
@@ -135,5 +142,5 @@ export function LoginForm(){
         </>
 
     );
-    
+
 }

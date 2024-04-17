@@ -9,8 +9,10 @@ export const metadata: Metadata = {
 export default function DashboardLayout({children} :{children: React.ReactNode}){
     return(
         <>
+        <div className="ml-64 p-4">
         <Sidebar></Sidebar>
             {children}
+        </div>
         </>
     )
 }

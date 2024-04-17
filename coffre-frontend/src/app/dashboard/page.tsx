@@ -1,4 +1,8 @@
 
+
+import CurrentPage from "@/components/reusable/current-page";
+
+
 export default function Dashboard(){
     const today = new Date();
 
@@ -12,6 +16,7 @@ export default function Dashboard(){
     return(
         <>
         <div>
+            <CurrentPage path={"dashboard"}></CurrentPage>
             <h1 className="text-2xl">Olá, seja bem-vindo(a)!</h1>
             <h2>{formatDate(today)}</h2>
         </div>
