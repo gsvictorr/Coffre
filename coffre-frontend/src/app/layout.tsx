@@ -3,7 +3,6 @@ import { Roboto } from "next/font/google";
 import "./globals.css";
 import ThemeProvider from "@/providers/theme-provider";
 import { AuthContextProvider } from "@/context/auth-context";
-import Sidebar from "@/components/sidebar";
 const roboto = Roboto({ weight: "400", subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -25,13 +24,15 @@ export default function RootLayout({
 
   return (
     <html lang="pt-BR">
-      <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
+      <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
         <AuthContextProvider>
           <body className={roboto.className}>
-            <div className="flex ml-64 p-4">
-            {children}
+            <div className="flex h-screen w-full">
+              <div className="flex flex-col w-full h-full">
+              {children}
+              </div>
             </div>
-            </body>
+          </body>
         </AuthContextProvider>
       </ThemeProvider>
     </html>

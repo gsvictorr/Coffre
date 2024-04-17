@@ -33,7 +33,7 @@ type SuccessAlertProps = {
 
 function SuccessAlert({ title, message, className }: SuccessAlertProps) {
     return (
-        <Alert className={cn("flex-row border-emerald-500 mb-2 transition-opacity duration-500 ease-in-out", className)}>
+        <Alert className={cn("flex-row border-emerald-500 mb-2 transition-opacity duration-500 ease-in-out dark:bg-zinc-900", className)}>
             <CheckCircleIcon className="h-8 w-8 stroke-emerald-800"></CheckCircleIcon>
             <AlertTitle className="font-bold mx-4">
                 {title}
@@ -53,7 +53,7 @@ type ErrorAlertProps = {
 
 function ErrorAlert({ title, message, className }: ErrorAlertProps) {
     return (
-        <Alert className={cn("flex-row border-red-800 mb-2 transition-opacity duration-500 ease-in-out", className)}>
+        <Alert className={cn("flex-row border-red-800 mb-2 transition-opacity duration-500 ease-in-out dark:bg-zinc-900", className)}>
             <AlertCircleIcon className="h-8 w-8 stroke-red-800"></AlertCircleIcon>
             <AlertTitle className="font-bold mx-4">
                 {title}

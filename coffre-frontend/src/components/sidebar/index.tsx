@@ -50,9 +50,9 @@ const items: ISidebarItem[] = [
 
 const Sidebar = () => {
     return (
-        <div className="fixed top-0 left-0 h-screen w-64 shadow-lg z-10 p-4">
+        <div className="fixed top-0 left-0 h-screen w-64 z-10 p-4">
             <div className="flex flex-col space-y-10 w-full">
-                <h2 className="text-principal text-2xl font-bold">Coffre</h2>
+                <h2 className="text-principal text-3xl font-bold p-2 text-center">Coffre</h2>
                 <div className="flex flex-col space-y-2">
                     {items.map((item) => (
                         <SidebarItem key={item.path} item={item} />
