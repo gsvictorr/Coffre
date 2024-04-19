@@ -38,6 +38,14 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.OK).body(productList);
     }
 
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ProductResponse> getProduct(@PathVariable("id") Long id, @RequestHeader(HttpHeaders.AUTHORIZATION) String token){
+        String jwtToken = token.substring(7);
+        ProductResponse productResponse = productService.getProduct(id, jwtToken);
+        return ResponseEntity.status(HttpStatus.OK).body(productResponse);
+    }
+
     @PostMapping
     public ResponseEntity<ProductResponse> saveProduct(@RequestBody @Valid ProductRequest productRequest, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
         String jwtToken = token.substring(7);

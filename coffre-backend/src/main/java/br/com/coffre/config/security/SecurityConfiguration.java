@@ -41,9 +41,10 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.POST, "/api/auth/validate").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/user/register").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/user/register").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/api/company/register").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/product").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/product/{id}").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/product").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/product").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/product/{id}").hasRole("ADMIN")
