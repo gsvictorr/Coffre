@@ -50,6 +50,25 @@ public class ProductService {
         return products;
     }
 
+    public ProductResponse getProduct(Long id, String token){
+        Long companyId = tokenService.getCompanyIdFromToken(token);
+
+        if (companyId == null) {
+            throw new CompanyException("O ID da empresa não pode ser nulo.");
+        }
+
+        Company company = companyRepository.findById(companyId)
+                .orElseThrow(() -> new CompanyException("Empresa não encontrada para o ID fornecido."));
+
+        if (productRepository.findByIdAndCompany(id, company) == null) {
+                    throw new ProductException("Produto com esse ID não foi localizado.");
+        } else{
+            Product product = productRepository.findByIdAndCompany(id, company);
+            return new ProductResponse(product);
+        }
+
+    }
+
     public ProductResponse saveProduct(ProductRequest productRequest, String token) {
 
         Long companyId = tokenService.getCompanyIdFromToken(token);

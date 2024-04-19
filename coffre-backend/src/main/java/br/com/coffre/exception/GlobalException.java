@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -94,6 +95,15 @@ public class GlobalException {
     public Map<String, String> acessDeniedException(AuthenticationException ex) {
         Map<String, String> errorsMap = new HashMap<>();
         errorsMap.put("error", ex.getMessage());
+        return errorsMap;
+    }
+
+    // DisabledException
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    @ExceptionHandler(DisabledException.class)
+    public Map<String, String> disabledException(DisabledException ex) {
+        Map<String, String> errorsMap = new HashMap<>();
+        errorsMap.put("error", "O usuário está desativado.");
         return errorsMap;
     }
 }
