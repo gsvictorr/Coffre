@@ -42,6 +42,7 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.POST, "/api/auth/validate").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/user/register").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/user/name").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/company/register").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/product").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/product/{id}").permitAll()

@@ -15,7 +15,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
 import br.com.coffre.exception.auth.LoginException;
-import br.com.coffre.exception.product.ProductException;
+import br.com.coffre.exception.company.CompanyException;
 import br.com.coffre.model.User;
 
 @Service
@@ -32,6 +32,7 @@ public class TokenService {
                     .withSubject(user.getEmail())
                     .withExpiresAt(generateExpirationDate())
                     .withClaim("companyId", user.getCompany().getId())
+                    .withClaim("name", user.getName())
                     .sign(algorithm);
             return token;
         } catch (JWTCreationException jwtEx) {
@@ -61,9 +62,22 @@ public class TokenService {
             DecodedJWT decodedJWT = verifier.verify(token);
             return decodedJWT.getClaim("companyId").asLong();
         } catch (JWTVerificationException e) {
-            throw new ProductException(e.getMessage());
+            throw new CompanyException(e.getMessage());
         }
     }
+
+    public String getNameFromToken(String token) {
+        try {
+             Algorithm algorithm = Algorithm.HMAC256(secret);
+             JWTVerifier verifier = JWT.require(algorithm)
+                                      .withIssuer("coffre")
+                                      .build();
+             DecodedJWT decodedJWT = verifier.verify(token);
+             return decodedJWT.getClaim("name").asString();
+         } catch (JWTVerificationException e) {
+             throw new LoginException(e.getMessage());
+         }
+     }
 
     private Instant generateExpirationDate() {
         return LocalDateTime.now().plusHours(1).toInstant(ZoneOffset.of("-03:00"));
