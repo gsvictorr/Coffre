@@ -16,7 +16,7 @@ export default function Dashboard(){
     return(
         <>
         <div>
-            <CurrentPage path={"dashboard"}></CurrentPage>
+            <CurrentPage path={"Dashboard"}></CurrentPage>
             <h1 className="text-2xl">Olá, seja bem-vindo(a)!</h1>
             <h2>{formatDate(today)}</h2>
         </div>

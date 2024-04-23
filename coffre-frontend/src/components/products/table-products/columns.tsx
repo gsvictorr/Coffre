@@ -1,6 +1,7 @@
 'use client';
 import { ColumnDef } from "@tanstack/react-table"
 import { InfoButton } from "./table-buttons/info-button";
+import { SellButton } from "./table-buttons/sell-button";
 
 export type Product = {
   id: number;
@@ -32,7 +33,7 @@ export const columns: ColumnDef<Product>[] = [
     header: "QUANTIDADE",
     cell: ({ row }) => {
       const amountOn = row.getValue("amount") as number;
-      const formatedClass = (amountOn < 4) ? "text-red-800 font-bold" : "text-black";
+      const formatedClass = (amountOn < 4) ? "text-red-800 font-bold" : "";
       return <p className={formatedClass}>{amountOn}</p>
     }
   },
@@ -44,6 +45,7 @@ export const columns: ColumnDef<Product>[] = [
       return (
         <>
           <InfoButton id={id}></InfoButton>
+          <SellButton id={id}></SellButton>
         </>
       );
     },
