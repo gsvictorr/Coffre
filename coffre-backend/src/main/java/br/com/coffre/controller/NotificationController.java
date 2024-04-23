@@ -18,7 +18,7 @@ import br.com.coffre.dto.notification.NotificationResponse;
 import br.com.coffre.service.NotificationService;
 
 @RestController
-@RequestMapping("/api/notification")
+@RequestMapping("/api/notifications")
 public class NotificationController {
 
     @Autowired
