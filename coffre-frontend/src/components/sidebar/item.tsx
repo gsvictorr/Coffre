@@ -3,8 +3,7 @@ import { AuthContext } from "@/context/auth-context";
 import { LucideIcon } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { useContext, useMemo } from "react";
-import { Tooltip, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
-import { TooltipContent } from "@radix-ui/react-tooltip";
+import { Tooltip, TooltipProvider, TooltipTrigger, TooltipContent} from "../ui/tooltip";
 
 interface ISidebarItem {
     name: string;
