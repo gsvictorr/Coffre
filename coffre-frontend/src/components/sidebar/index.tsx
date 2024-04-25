@@ -1,6 +1,6 @@
 'use client';
 
-import { Bell, CircleUserRound, Cog, LayoutDashboard, LogOut, LucideIcon, Package } from "lucide-react";
+import { Bell, CircleUserRound, Cog, LayoutDashboard, LogOut, LucideIcon, Package, UsersRound } from "lucide-react";
 import SidebarItem from "./item";
 import { Avatar, AvatarFallback } from "../ui/avatar";
 import { frontendAPI } from "@/lib/api";
@@ -35,9 +35,9 @@ const items: ISidebarItem[] = [
     },
 
     {
-        name: "Perfil",
-        icon: CircleUserRound,
-        path: "/profile"
+        name: "Usuários",
+        icon: UsersRound,
+        path: "/users"
     },
 
     {
@@ -55,24 +55,29 @@ const items: ISidebarItem[] = [
 ]
 
 const Sidebar = () => {
-
     const [initial, setInitial] = useState("");
     const [nameUser, setNameUser] = useState("");
 
     useEffect(() => {
         const fetchName = async () => {
             try {
+                const storedName = localStorage.getItem("userName");
+                if (storedName) {
+                    setNameUser(storedName);
+                    setInitial(storedName.charAt(0));
+                }
                 const response = await frontendAPI.get("/user/name");
-                const name = response.data.name;
-                setNameUser(name);
-                if (name) {
-                    setInitial(name.charAt(0));
+                const newName = response.data.name;
+                if (storedName !== newName) {
+                    setNameUser(newName);
+                    setInitial(newName.charAt(0));
+                    localStorage.setItem("userName", newName);
                 }
             } catch (error) {
                 console.error("Erro ao obter o nome do usuário:", error);
             }
         };
-
+    
         fetchName();
     }, []);
 
