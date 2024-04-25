@@ -9,11 +9,13 @@ import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingRequestHeaderException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import br.com.coffre.exception.auth.LoginException;
+import br.com.coffre.exception.auth.SecurityException;
 import br.com.coffre.exception.company.CompanyException;
 import br.com.coffre.exception.notification.NotificationException;
 import br.com.coffre.exception.product.ProductException;
@@ -54,7 +56,7 @@ public class GlobalException {
     }
 
     // CompanyException
-    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(CompanyException.class)
     public Map<String, String> companyException(CompanyException ex) {
         Map<String, String> errorsMap = new HashMap<String, String>();
@@ -106,4 +108,24 @@ public class GlobalException {
         errorsMap.put("error", "O usuário está desativado.");
         return errorsMap;
     }
+
+    // SecurityException
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(SecurityException.class)
+    public Map<String, String> securityException(SecurityException ex) {
+        Map<String, String> errorsMap = new HashMap<>();
+        errorsMap.put("error", ex.getMessage());
+        return errorsMap;
+    }
+
+        // MissingRequestHeaderException
+        @ResponseStatus(HttpStatus.UNAUTHORIZED)
+        @ExceptionHandler(MissingRequestHeaderException.class)
+        public Map<String, String> requestHeaderException(MissingRequestHeaderException ex) {
+            Map<String, String> errorsMap = new HashMap<>();
+            errorsMap.put("error", "Token de acesso inválido ou nulo.");
+            return errorsMap;
+        }
+
 }
+

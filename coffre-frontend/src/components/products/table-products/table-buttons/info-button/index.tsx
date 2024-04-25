@@ -117,8 +117,8 @@ export function InfoButton({ id }: InfoButtonProps) {
             <DialogTrigger>
                 <Button variant="secondary" key={id} onClick={async () => {
                     await getProduct(id);
-                }} className="text-base gap-2">
-                    <Info className="w-4 h-4"></Info>
+                }} className="text-base gap-2 rounded-full">
+                    <Info className="size-4"></Info>
                 </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
