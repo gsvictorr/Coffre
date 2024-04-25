@@ -9,6 +9,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import br.com.coffre.exception.auth.LoginException;
+import br.com.coffre.exception.auth.SecurityException;
 import br.com.coffre.repository.UserRepository;
 import br.com.coffre.service.TokenService;
 import jakarta.servlet.FilterChain;
@@ -28,17 +30,31 @@ public class SecurityFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(@SuppressWarnings("null") HttpServletRequest request, @SuppressWarnings("null") HttpServletResponse response, @SuppressWarnings("null") FilterChain filterChain)
             throws ServletException, IOException {
-        var token = this.recoverToken(request);
-        if (token != null) {
-            var email = tokenService.validateToken(token);
-            UserDetails user = userRepository.findByEmail(email);
-
-            var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        }
-        filterChain.doFilter(request, response);
-    }
+                try {
+                    String token = recoverToken(request);
+                    
+                    if (token != null) {
+                        String email = tokenService.validateToken(token);
+                        
+                        if (email != null) {
+                            UserDetails user = userRepository.findByEmail(email);
+                            
+                            if (user != null) {
+                                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+                                SecurityContextHolder.getContext().setAuthentication(authentication);
+                            } else {
+                                throw new LoginException("Usuário não encontrado.");
+                            }
+                        } else {
+                            throw new SecurityException("Token de acesso fornecido é inválido.");
+                        }
+                    }
+            
+                    filterChain.doFilter(request, response);
+                } catch (IOException | ServletException ex) {
+                    throw new SecurityException("Erro durante o filtro de segurança");
+                }
+            }
 
     private String recoverToken(HttpServletRequest request) {
         var authHeader = request.getHeader("Authorization");

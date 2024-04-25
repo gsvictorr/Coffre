@@ -1,5 +1,7 @@
 package br.com.coffre.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -25,18 +27,23 @@ public class UserService {
     @Autowired
     private CompanyRepository companyRepository;
 
-    public UserResponse registerUser(UserRequest userRequest) {
-        if (userRequest.companyId() == null) {
+    @Autowired
+    private TokenService tokenService;
+
+    public UserResponse registerUser(UserRequest userRequest, String token) {
+
+        Long companyId = tokenService.getCompanyIdFromToken(token);
+
+        if (companyId == null) {
             throw new CompanyException("O ID da empresa não pode ser nulo.");
         }
 
-        Company company = companyRepository.findById(userRequest.companyId())
+        Company company = companyRepository.findById(companyId)
                 .orElseThrow(() -> new CompanyException("Empresa não encontrada para o ID fornecido."));
 
-        User newUser = userRequest.convert(userRequest);
-
         try {
-            if (userRepository.findByEmail(newUser.getEmail()) != null) {
+            User newUser = userRequest.convert(userRequest);
+            if (userRepository.findByEmailAndCompany(newUser.getEmail(), company) != null) {
                 throw new RegisterException("Esse email já está cadastrado em outro usuário.");
             } else {
                 String encodedPassword = passwordEncoder.encode(newUser.getPassword());
@@ -55,6 +62,22 @@ public class UserService {
             throw new RegisterException(e.getMessage());
         }
 
+    }
+
+    public List<UserResponse> listAllUsers(String token) {
+
+        Long companyId = tokenService.getCompanyIdFromToken(token);
+
+        if (companyId == null) {
+            throw new CompanyException("O ID da empresa não pode ser nulo.");
+        }
+
+        Company company = companyRepository.findById(companyId)
+                .orElseThrow(() -> new CompanyException("Empresa não encontrada para o ID fornecido."));
+
+        List<UserResponse> users = userRepository.findAllByCompany(company).stream().map(UserResponse::new)
+                .toList();
+        return users;
     }
 
 }

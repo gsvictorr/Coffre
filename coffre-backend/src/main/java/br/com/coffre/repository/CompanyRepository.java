@@ -9,4 +9,6 @@ import br.com.coffre.model.Company;
 public interface CompanyRepository extends JpaRepository<Company, Long> {
     
     Company findByName (String name);
+
+    Company findByEmail(String email);
 }

@@ -1,6 +1,7 @@
 package br.com.coffre.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.coffre.dto.user.UserList;
 import br.com.coffre.dto.user.UserRequest;
 import br.com.coffre.dto.user.UserResponse;
 import br.com.coffre.service.TokenService;
@@ -31,8 +33,9 @@ public class UserController {
     private TokenService tokenService;
 
     @PostMapping("/register")
-    public ResponseEntity<UserResponse> registerUser(@RequestBody @Valid UserRequest userRequest) {
-        UserResponse registerUser = userService.registerUser(userRequest);
+    public ResponseEntity<UserResponse> registerUser(@RequestBody @Valid UserRequest userRequest, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
+        String jwtToken = token.substring(7);
+        UserResponse registerUser = userService.registerUser(userRequest, jwtToken);
         return ResponseEntity.status(HttpStatus.CREATED).body(registerUser);
     }
 
@@ -44,5 +47,14 @@ public class UserController {
         responseName.put("name", name);
         return ResponseEntity.status(HttpStatus.OK).body(responseName);
     }
+
+    @GetMapping
+    public ResponseEntity<UserList> getAllProducts(@RequestHeader(HttpHeaders.AUTHORIZATION) String token){
+        String jwtToken = token.substring(7);
+        List<UserResponse> users = userService.listAllUsers(jwtToken);
+        UserList userList = new UserList(users);
+        return ResponseEntity.status(HttpStatus.OK).body(userList);
+    }
+    
 
 }
