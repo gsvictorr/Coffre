@@ -13,7 +13,7 @@ interface ISidebarItem {
     path: string;
 }
 
-const result = frontendAPI.get("/user/name");
+const result = frontendAPI.get("/user/info");
 
 const items: ISidebarItem[] = [
     {
@@ -57,21 +57,34 @@ const items: ISidebarItem[] = [
 const Sidebar = () => {
     const [initial, setInitial] = useState("");
     const [nameUser, setNameUser] = useState("");
+    const [emailUser, setEmailUser] = useState("");
 
     useEffect(() => {
         const fetchName = async () => {
             try {
                 const storedName = localStorage.getItem("userName");
+                const storedEmail = localStorage.getItem("userEmail");
                 if (storedName) {
                     setNameUser(storedName);
                     setInitial(storedName.charAt(0));
                 }
-                const response = await frontendAPI.get("/user/name");
+
+                if(storedEmail){
+                    setEmailUser(storedEmail);
+                }
+
+                const response = await frontendAPI.get("/user/info");
                 const newName = response.data.name;
+                const newEmail = response.data.email;
                 if (storedName !== newName) {
                     setNameUser(newName);
                     setInitial(newName.charAt(0));
                     localStorage.setItem("userName", newName);
+                }
+
+                if (storedEmail !== newEmail) {
+                    setEmailUser(newEmail);
+                    localStorage.setItem("userEmail", newEmail);
                 }
             } catch (error) {
                 console.error("Erro ao obter o nome do usuário:", error);
@@ -86,21 +99,25 @@ const Sidebar = () => {
             <div className="flex flex-col space-y-10 w-full">
                 <h2 className="text-principal text-3xl font-bold p-2 text-center">Coffre</h2>
                 <div className="flex flex-col space-y-2">                   
-                        <TooltipProvider>
-                            <Tooltip>
-                                <TooltipTrigger>
+                    <TooltipProvider>
+                        <Tooltip>
+                            <TooltipTrigger>
                                 <div className="flex items-center space-x-2 mb-2">
                                     <Avatar>
                                         <AvatarFallback className="border-2 border-principal font-semibold">{initial}</AvatarFallback>
                                     </Avatar>
-                                    <span className="text-md font-basae">Olá, {nameUser}.</span>
+                                    <div className="flex flex-col"> {/* Utilize uma coluna flexível */}
+                                        <span className="text-md font-base text-left">Olá, {nameUser}.</span>
+                                        <span className="text-xs">{emailUser}</span>
                                     </div>
-                                </TooltipTrigger>
-                                <TooltipContent>
-                                    <p className="text-sm">Olá, {nameUser}.</p>
-                                </TooltipContent>
-                            </Tooltip>
-                        </TooltipProvider>
+                                </div>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                                <p className="text-xs">Olá, {nameUser}.</p>
+                                <p>{emailUser}</p>
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
                     {items.map((item) => (
                         <SidebarItem key={item.path} item={item} />
                     ))}

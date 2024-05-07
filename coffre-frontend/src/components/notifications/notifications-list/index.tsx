@@ -1,9 +1,10 @@
 'use client';
 
 import { NotificationType } from "@/app/api/notifications/route";
-import { useContext, useEffect } from "react";
+import { Suspense, useContext, useEffect } from "react";
 import { NotificationsContext } from "@/context/notifications-context";
 import { RemoveButton } from "../remove-button";
+import { LoadingSkeleton } from "@/components/ui/loading-skeleton";
 
 interface CardNotificationProps {
     notification: NotificationType;
@@ -34,7 +35,8 @@ export function NotificationsList() {
     }, [refreshNotifications]);
 
     return (
-        <div className="grid grid-cols-4 gap-2 mt-4">
+        <div className="grid grid-cols-5"> 
+        <Suspense fallback={<LoadingSkeleton/>}>
             {notifications.length === 0 ? (
                 <h2>Não há notificações para mostrar.</h2>
             ) : (
@@ -42,6 +44,7 @@ export function NotificationsList() {
                     <CardNotification key={notification.id} notification={notification} />
                 ))
             )}
+            </Suspense>
         </div>
     );
 }

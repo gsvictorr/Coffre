@@ -116,6 +116,7 @@ public class ProductService {
              if(alterProduct.getAmount() < 4){
                 Map<String, Object> emailContent = new HashMap<>();
                 emailContent.put("product", alterProduct.getName());
+                emailContent.put("amount", alterProduct.getAmount());
                 CompletableFuture.runAsync(() -> {
                 notificationService.sendNotification("AVISO: Produto acabando!", "O produto " + alterProduct.getName() + " está acabando.", emailContent, company);
                 });

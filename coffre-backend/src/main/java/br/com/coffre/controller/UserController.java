@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.coffre.dto.user.UserInfo;
 import br.com.coffre.dto.user.UserList;
 import br.com.coffre.dto.user.UserRequest;
 import br.com.coffre.dto.user.UserResponse;
@@ -39,17 +40,16 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(registerUser);
     }
 
-    @GetMapping("/name")
-    public ResponseEntity<Map<String, String>> getNameUser(@RequestHeader(HttpHeaders.AUTHORIZATION) String token){
+    @GetMapping("/info")
+    public ResponseEntity<UserInfo> getInfoUser(@RequestHeader(HttpHeaders.AUTHORIZATION) String token){
         String jwtToken = token.substring(7);
-        String name = tokenService.getNameFromToken(jwtToken);
-        Map<String, String> responseName = new HashMap<>();
-        responseName.put("name", name);
-        return ResponseEntity.status(HttpStatus.OK).body(responseName);
+        Long id = tokenService.getUserFromToken(jwtToken);
+        UserInfo infoUser = userService.infoUser(id);
+        return ResponseEntity.status(HttpStatus.OK).body(infoUser);
     }
 
     @GetMapping
-    public ResponseEntity<UserList> getAllProducts(@RequestHeader(HttpHeaders.AUTHORIZATION) String token){
+    public ResponseEntity<UserList> getAllUsers(@RequestHeader(HttpHeaders.AUTHORIZATION) String token){
         String jwtToken = token.substring(7);
         List<UserResponse> users = userService.listAllUsers(jwtToken);
         UserList userList = new UserList(users);

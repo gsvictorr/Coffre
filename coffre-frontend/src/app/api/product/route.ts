@@ -28,6 +28,7 @@ export type ProductResponseType = {
 
 
 export async function GET(request: NextRequest) {
+    
     const authToken = request.cookies.get("coffre.token")?.value;
     var response: BackendProductErrorResponseType;
 

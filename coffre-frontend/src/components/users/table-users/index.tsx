@@ -4,6 +4,7 @@ import { columns } from "./columns"
 import { DataTable } from "./data-table"
 import { useContext } from "react"
 import { UsersContext } from "@/context/users-context";
+import { LoadingSkeleton } from "@/components/ui/loading-skeleton";
 
 
 
@@ -15,7 +16,11 @@ export function UserTable() {
 
   return (
     <div className="max-auto py-10">
-      <DataTable columns={columns} data={users} />
+      {users.length === 0 ? (
+        <LoadingSkeleton/>
+      ) : (
+        <DataTable columns={columns} data={users} />   
+      )}
     </div>
   )
 }

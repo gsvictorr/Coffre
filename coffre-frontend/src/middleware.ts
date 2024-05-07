@@ -24,7 +24,7 @@ export default async function middleware(request: NextRequest) {
 }
 
 export const config = {
-    matcher: ['/dashboard', '/stock', '/notifications']
+    matcher: ['/dashboard', '/stock', '/notifications', '/users', '/settings']
 }
 
 async function validateToken(token: string) {

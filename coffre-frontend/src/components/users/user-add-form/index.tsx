@@ -177,6 +177,7 @@ export function UserAddForm() {
                             </DialogFooter>
                         </form>
                     </Form>
+                    <p className="text-xs">A senha padrão para novos usuários é: "ABCDEFG@@", sem as aspas.</p>
                 </DialogContent>
             </Dialog>
         </div>

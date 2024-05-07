@@ -1,15 +1,18 @@
 package br.com.coffre.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import br.com.coffre.dto.user.UserInfo;
 import br.com.coffre.dto.user.UserRequest;
 import br.com.coffre.dto.user.UserResponse;
 import br.com.coffre.exception.company.CompanyException;
 import br.com.coffre.exception.user.RegisterException;
+import br.com.coffre.exception.user.UserException;
 import br.com.coffre.model.Company;
 import br.com.coffre.model.User;
 import br.com.coffre.repository.CompanyRepository;
@@ -80,4 +83,17 @@ public class UserService {
         return users;
     }
 
+    public UserInfo infoUser(Long id) {
+
+        Optional<User> newInfo = userRepository.findById(id);
+
+        if (newInfo.isPresent()) {
+            UserInfo userInfo = new UserInfo(newInfo.get().getId(), newInfo.get().getName(), newInfo.get().getEmail());
+
+            return userInfo;
+        } else {
+            throw new UserException("Ocorreu um erro ao encontrar esse usuário.");
+        }
+
+    }
 }

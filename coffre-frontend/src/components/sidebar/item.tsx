@@ -44,7 +44,7 @@ const SidebarItem = ({ item }: { item: ISidebarItem }) => {
                     </div>
                 </TooltipTrigger>
                 <TooltipContent>
-                    <p className="text-sm">{name}</p>
+                    <p className="text-xs">{name}</p>
                 </TooltipContent>
             </Tooltip>
         </TooltipProvider>

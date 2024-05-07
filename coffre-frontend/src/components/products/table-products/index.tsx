@@ -3,8 +3,7 @@ import { ProductsContext } from "@/context/products-context"
 import { columns } from "./columns"
 import { DataTable } from "./data-table"
 import { useContext } from "react"
-
-
+import { LoadingSkeleton } from "@/components/ui/loading-skeleton";
 
 export function ProductTable() {
 
@@ -14,7 +13,11 @@ export function ProductTable() {
 
   return (
     <div className="max-auto py-10">
-      <DataTable columns={columns} data={products} />
+      {products.length === 0 ? (
+        <LoadingSkeleton/>
+      ) : (
+        <DataTable columns={columns} data={products} />   
+      )}
     </div>
   )
 }
