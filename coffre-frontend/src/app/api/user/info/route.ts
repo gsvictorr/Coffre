@@ -2,8 +2,10 @@ import { backendAPI } from "@/lib/api";
 import { AxiosError } from "axios";
 import { NextRequest } from "next/server";
 
-export type NameResponseType = {
-    name?: string;
+export type UserResponseType = {
+    id?: number,
+    name?: string,
+    email?: string,
 };
 
 type BackendErrorResponseType = {
@@ -19,14 +21,14 @@ export async function GET(request: NextRequest){
     }
 
     try {
-        const result = await backendAPI.get("/user/name", {
+        const result = await backendAPI.get("/user/info", {
             headers: {
                 "Authorization": `Bearer ${authToken}`
             }
         });
 
-        const name = result.data as NameResponseType;
-        return new Response(JSON.stringify(name));
+        const user = result.data as UserResponseType;
+        return new Response(JSON.stringify(user));
         
     } catch (e) {
         

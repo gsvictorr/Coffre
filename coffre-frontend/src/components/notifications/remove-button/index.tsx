@@ -15,11 +15,11 @@ export function RemoveButton({id} : RemoveNotificationProps){
     const [loading, setLoading] = useState(false);
 
     async function removeNotification(id: number){
+        setLoading(true);
         try {
             const url = `/notifications/${id}`;
             const result = await frontendAPI.delete(url);
             notificationsContext.refreshNotifications();
-            setLoading(true);
         } catch (error) {
     
         } finally{
