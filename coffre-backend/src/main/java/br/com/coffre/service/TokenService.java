@@ -32,7 +32,7 @@ public class TokenService {
                     .withSubject(user.getEmail())
                     .withExpiresAt(generateExpirationDate())
                     .withClaim("companyId", user.getCompany().getId())
-                    .withClaim("name", user.getName())
+                    .withClaim("id", user.getId())
                     .sign(algorithm);
             return token;
         } catch (JWTCreationException jwtEx) {
@@ -66,14 +66,14 @@ public class TokenService {
         }
     }
 
-    public String getNameFromToken(String token) {
+    public Long getUserFromToken(String token) {
         try {
              Algorithm algorithm = Algorithm.HMAC256(secret);
              JWTVerifier verifier = JWT.require(algorithm)
                                       .withIssuer("coffre")
                                       .build();
              DecodedJWT decodedJWT = verifier.verify(token);
-             return decodedJWT.getClaim("name").asString();
+             return decodedJWT.getClaim("id").asLong();
          } catch (JWTVerificationException e) {
              throw new LoginException(e.getMessage());
          }

@@ -20,6 +20,7 @@ import br.com.coffre.exception.company.CompanyException;
 import br.com.coffre.exception.notification.NotificationException;
 import br.com.coffre.exception.product.ProductException;
 import br.com.coffre.exception.user.RegisterException;
+import br.com.coffre.exception.user.UserException;
 
 @RestControllerAdvice
 public class GlobalException {
@@ -82,6 +83,15 @@ public class GlobalException {
         return errorsMap;
     }
 
+    // UserException
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(UserException.class)
+    public Map<String, String> userException(UserException ex) {
+        Map<String, String> errorsMap = new HashMap<String, String>();
+        errorsMap.put("error", ex.getMessage());
+        return errorsMap;
+    }
+
     // AccessDeniedException
     @ResponseStatus(HttpStatus.FORBIDDEN)
     @ExceptionHandler(AccessDeniedException.class)
@@ -118,14 +128,13 @@ public class GlobalException {
         return errorsMap;
     }
 
-        // MissingRequestHeaderException
-        @ResponseStatus(HttpStatus.UNAUTHORIZED)
-        @ExceptionHandler(MissingRequestHeaderException.class)
-        public Map<String, String> requestHeaderException(MissingRequestHeaderException ex) {
-            Map<String, String> errorsMap = new HashMap<>();
-            errorsMap.put("error", "Token de acesso inválido ou nulo.");
-            return errorsMap;
-        }
+    // MissingRequestHeaderException
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(MissingRequestHeaderException.class)
+    public Map<String, String> requestHeaderException(MissingRequestHeaderException ex) {
+        Map<String, String> errorsMap = new HashMap<>();
+        errorsMap.put("error", "Token de acesso inválido ou nulo.");
+        return errorsMap;
+    }
 
 }
-

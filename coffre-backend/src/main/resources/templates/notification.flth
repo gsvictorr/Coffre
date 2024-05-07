@@ -40,6 +40,10 @@
         color: #005502;
     }
 
+    .amount{
+        color: red;
+    }
+
     .team-coffre {
         font-weight: bold;
         color: #005502;
@@ -53,9 +57,10 @@
         <h1>Coffre</h1>
         <h2>${product} ESTÁ ACABANDO!</h2>
         <br>
-        <p>O produto <p class="product">${product}</p> está acabando, por favor, verifique a disponibilidade e <br>não esqueça de reabastecer seu estoque.</p>
+        <p>Verificamos que o produto <p class="product">${product}</p> está acabando, por favor, verifique a disponibilidade no seu estoque.</p>
         <br>
-        <p class="info">Email enviado automaticamente, favor não responder</p>
+        <p>Quantidade disponível: <p class="amount">${amount}</p>
+        <p class="info">Email enviado automaticamente, favor não responder.</p>
         <p class="team-coffre">Equipe Coffre.</p>
     </div>
 </body>

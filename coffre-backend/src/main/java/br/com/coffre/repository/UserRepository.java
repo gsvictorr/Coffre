@@ -2,6 +2,7 @@ package br.com.coffre.repository;
 
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,6 +22,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     User findByEmailAndCompany(String email, Company company);
 
     List<User> findAllByCompany(Company company);
+
+    User findByIdAndCompany(Long id, Company company);
 
     
 }
