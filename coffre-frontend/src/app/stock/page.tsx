@@ -11,7 +11,7 @@ export default function Stock() {
         <>
             <ProductsContextProvider>
                 <div>
-                    <CurrentPage path={"Estoque"}></CurrentPage>
+                    <CurrentPage path={"/stock"} name={"Estoque"}></CurrentPage>
                     <ProductAddForm/>
                     <ProductTable/>
                 </div>

@@ -1,11 +1,11 @@
 'use client';
-import React, { useContext, useState } from "react";
+import React, { Suspense, useContext, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { frontendAPI } from "@/lib/api";
-import { Info, Loader2, Pencil } from "lucide-react";
+import { Eye, Info, Loader2, Pencil } from "lucide-react";
 import { z } from "zod";
 import { CustomAlert, CustomAlertType } from "@/components/alerts/custom-alerts";
 import { useForm } from "react-hook-form";
@@ -13,6 +13,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { FormControl, FormField, FormItem, FormMessage, Form } from "@/components/ui/form";
 import { ProductsContext } from "@/context/products-context";
 import { ProductResponseType, ProductType } from "@/app/api/product/route";
+import { LoadingSkeleton } from "@/components/ui/loading-skeleton";
 
 type InfoButtonProps = {
     id: number;
@@ -114,11 +115,12 @@ export function InfoButton({ id }: InfoButtonProps) {
     };
     return (
         <Dialog>
+            <Suspense fallback={<LoadingSkeleton />} />
             <DialogTrigger>
-                <Button variant="secondary" key={id} onClick={async () => {
+                <Button variant={"ghost"} key={id} onClick={async () => {
                     await getProduct(id);
-                }} className="text-base gap-2 rounded-full">
-                    <Info className="size-4"></Info>
+                }} className="text-base bg-transparent shadow-none">
+                    <Eye className="size-4 text-black"></Eye>
                 </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
@@ -130,6 +132,8 @@ export function InfoButton({ id }: InfoButtonProps) {
                 </DialogHeader>
                 <Form {...alterForm}  >
                     <form onSubmit={alterForm.handleSubmit(clickAlterProduct)} className="grid gap-4">
+
+
                         <FormField
                             control={alterForm.control}
                             name="id"
@@ -137,9 +141,8 @@ export function InfoButton({ id }: InfoButtonProps) {
                                 return (
                                     <div className="grid grid-cols-4 items-center gap-4">
                                         <FormItem>
-                                            <Label htmlFor="id" className="text-right">ID:</Label>
                                             <FormControl>
-                                                <Input id="id" disabled defaultValue={data ? data.id : ''} {...field} className="col-span-3" />
+                                                <p id="id" {...field} className="col-span-3 font-semibold italic text-xs text-gray-600">{data ? 'ID: ' + data.id : 'Procurando ID...'}</p>
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -147,6 +150,7 @@ export function InfoButton({ id }: InfoButtonProps) {
                                 )
                             }}
                         />
+
 
                         <FormField
                             control={alterForm.control}
@@ -204,8 +208,9 @@ export function InfoButton({ id }: InfoButtonProps) {
 
                         <DialogFooter>
                             {!edit && (
-                                <Button type="submit" className="bg-principal text-white" disabled={loading}>{loading ? <Loader2 className="animate-spin h-5 w-5 " /> : "Salvar"}</Button>
-                            )}                            <DialogClose asChild>
+                                <Button type="submit" className="bg-principal text-white mt-2" disabled={loading}>{loading ? <Loader2 className="animate-spin h-5 w-5" /> : "Salvar"}</Button>
+                            )}
+                            <DialogClose asChild>
                                 <Button type="button" variant={"destructive"} className="text-white bg-red-800" onClick={() => setEdit(true)}>Cancelar</Button>
                             </DialogClose>
                         </DialogFooter>

@@ -9,7 +9,7 @@ export default function Users() {
         <>
             <UsersContextProvider>
                 <div>
-                    <CurrentPage path={"Usuários"}></CurrentPage>
+                    <CurrentPage path={"/users"} name={"Usuários"}></CurrentPage>
                     <UserAddForm></UserAddForm>
                     <UserTable></UserTable>
                 </div>

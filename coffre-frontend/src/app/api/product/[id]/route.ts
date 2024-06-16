@@ -46,3 +46,40 @@ export async function GET(request: NextRequest, {params} : GetProductType){
         return new Response(JSON.stringify(response));
     }
 }
+
+export async function DELETE(request: NextRequest, {params} : GetProductType){
+
+
+    const authToken = request.cookies.get("coffre.token")?.value;
+
+    var response:  BackendProductErrorResponseType;
+    if(!authToken){
+        return new Response(JSON.stringify(new Error("Usuário não autorizado")));
+    }
+
+    try {
+        const url = `/product/${params.id}`;
+        const result = await backendAPI.delete(url, {
+            headers: {
+                "Authorization": `Bearer ${authToken}`
+            }
+        });
+
+        return new Response("");
+        
+    } catch (e) {
+        
+        const axiosError = e as AxiosError;
+
+        const { error } = axiosError.response?.data as BackendProductErrorResponseType;
+
+        if (error) {
+            response = { error };
+        }
+        else {
+            response = { error: axiosError.message };
+        }
+        
+        return new Response(JSON.stringify(response));
+    }
+}
