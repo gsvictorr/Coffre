@@ -2,6 +2,7 @@
 import { ColumnDef } from "@tanstack/react-table"
 import { InfoButton } from "./table-buttons/info-button";
 import { SellButton } from "./table-buttons/sell-button";
+import { DeleteButton } from "./table-buttons/delete-button";
 
 export type Product = {
   id: number;
@@ -46,6 +47,7 @@ export const columns: ColumnDef<Product>[] = [
         <>
           <InfoButton id={id}></InfoButton>
           <SellButton id={id}></SellButton>
+          <DeleteButton id={id}></DeleteButton>
         </>
       );
     },

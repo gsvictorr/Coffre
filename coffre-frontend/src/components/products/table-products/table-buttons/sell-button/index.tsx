@@ -84,8 +84,8 @@ export function SellButton({ id }: SellButtonProps) {
     return (
         <Dialog>
             <DialogTrigger>
-                <Button className="text-base ml-2 bg-principal rounded-full" key={id}>
-                    <CircleDollarSign className="w-4 h-4 text-white "></CircleDollarSign>
+                <Button variant={"ghost"} className="text-base bg-transparent shadow-none" key={id}>
+                    <CircleDollarSign className="size-4 text-principal"></CircleDollarSign>
                 </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">

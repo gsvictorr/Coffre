@@ -10,7 +10,7 @@ export default function Notifications() {
         <>
             <NotificationsContextProvider>
                 <div>
-                    <CurrentPage path={"Notificações"}></CurrentPage>
+                    <CurrentPage path={"/notifications"} name={"Notificações"}></CurrentPage>
                     <Suspense fallback={"Carregando..."}>
                     <NotificationsList></NotificationsList>
                     </Suspense>
