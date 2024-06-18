@@ -1,6 +1,7 @@
 'use client';
 
 import { UserType, UsersType } from "@/app/api/user/route";
+import { LoadingSkeleton } from "@/components/ui/loading-skeleton";
 import { frontendAPI } from "@/lib/api";
 import { useEffect, useState } from "react";
 import React, { createContext } from "react";
@@ -20,7 +21,6 @@ async function getData(): Promise<UserType[]> {
   
       if(users){
         data = users;
-        const { id, name, email, role } = result.data;
       }
       
     } catch (error) {
@@ -37,10 +37,13 @@ export const UsersContext = createContext({} as UsersContextType);
 export function UsersContextProvider({children}: {children: React.ReactNode}){
 
     const [users, setUsers] = useState<UserType[]>([]);
+    const [loading, setLoading] = useState(true);
+
 
     useEffect(() => {
       getData().then((response) => {
         setUsers(response);
+        setLoading(false);
       });
     }, []);
 
@@ -53,7 +56,7 @@ export function UsersContextProvider({children}: {children: React.ReactNode}){
 
     return (
         <UsersContext.Provider value={{users, refreshTable}}>
-                {children}
+                {!loading ? children : <LoadingSkeleton/>}
         </UsersContext.Provider>
     )
 }

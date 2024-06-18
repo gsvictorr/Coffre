@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import CurrentPage from "@/components/reusable/current-page";
 import { frontendAPI } from "@/lib/api";
@@ -44,11 +44,9 @@ export default function Dashboard(){
 
     return(
         <>
-        <div>
             <CurrentPage path={"dashboard"} name={"Dashboard"}></CurrentPage>
             <h1 className="text-2xl">Seja bem-vindo(a), {nameUser}!</h1>
             <p className="text-sm">Exibindo atualizações de {formatDate(today)}</p>
-        </div>
         </>
     );
 }

@@ -1,5 +1,6 @@
 'use client';
 import { NotificationType } from "@/app/api/notifications/route"
+import { LoadingSkeleton } from "@/components/ui/loading-skeleton";
 import { frontendAPI } from "@/lib/api";
 import { createContext, useEffect, useState } from "react";
 
@@ -16,10 +17,12 @@ export const NotificationsContext = createContext({} as NotificationsContextType
 export function NotificationsContextProvider({children} : {children: React.ReactNode}){
 
     const [notifications, setNotifications] = useState<NotificationType[]>([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         getNotifications().then((response) => {
             setNotifications(response);
+            setLoading(false);
         });
     }, []);
 
@@ -29,7 +32,6 @@ export function NotificationsContextProvider({children} : {children: React.React
             const notifications = result.data.notifications as NotificationType[];
             return notifications;
         } catch (error) {
-            console.error("Error fetching notifications:", error);
             return [];
         }
     }
@@ -42,7 +44,7 @@ export function NotificationsContextProvider({children} : {children: React.React
 
     return (
         <NotificationsContext.Provider value={{ notifications, refreshNotifications }}>
-            {children}
-        </NotificationsContext.Provider>
+                {!loading ? children : <LoadingSkeleton/>}
+                </NotificationsContext.Provider>
     );
 }

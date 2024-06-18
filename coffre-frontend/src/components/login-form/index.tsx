@@ -14,6 +14,8 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Loader2, SquareArrowRight } from "lucide-react";
 import { LoginResponseType } from "@/app/api/auth/login/route";
+import logo from "../../../public/logo.png";
+import Image from "next/image";
 
 const loginFormSchema = z.object({
     email: z.string().email({ message: "Insira um email válido." }).min(10, { message: "Insira um email com no mínimo 10 caracteres." }),
@@ -83,64 +85,88 @@ export function LoginForm() {
 
     return (
         <>
-            <div className="flex items-center h-screen">
-                <div className="container space-y-2 p-8 max-w-md rounded-xl shadow-md dark:bg-zinc-900">
-                    <span className="flex items-center justify-center">
-                        <h1 className="font-bold text-principal text-3xl">Coffre</h1>
-                    </span>
-                    <span className='flex justify-center text-md'>Realize seu login</span>
-                    <Form{...loginForm}>
-                        <form onSubmit={loginForm.handleSubmit(clickLogin)}>
-                            {message}
-                            <FormField
-                                control={loginForm.control}
-                                name="email"
-                                render={({ field }) => {
-                                    return (
-                                        <FormItem className="mb-2">
-                                            <Label htmlFor='text' className='font-bold text-sm'>Email</Label>
-                                            <FormControl>
-                                                <Input type='text' placeholder='Digite seu email' className='rounded-none border-l-4 border-l-principal'  {...field} />
-                                            </FormControl>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )
-                                }}
+            <div className="flex items-center h-screen max-w-auto">
+                <div className="container shadow-md space-y-2 p-8 max-w-3xl rounded-xl border border-1">
+                <div className="w-full grid items-center justify-center gap-8 z-0 md:grid-cols-2 sm:grid-cols-1">
+                        <div className="flex flex-col items-center justify-center text-center">
+                            <Image
+                                alt="coffre-logo"
+                                src={logo}
+                                width={80}
+                                height={80}
+                                className="rounded-xl shadow-md border mb-4"
                             />
+                            <span className="text-gray-400">Sua chave para o controle eficiente!</span>
+                        </div>
+                        <div className="flex flex-col justify-center w-full gap-4">
+                            <h1 className="font-bold text-gray-500 text-2xl">Entrar</h1>
+                            <Form {...loginForm}>
+                                <form onSubmit={loginForm.handleSubmit(clickLogin)} className="space-y-4 w-full">
+                                    {message}
+                                    <FormField
+                                        control={loginForm.control}
+                                        name="email"
+                                        render={({ field }) => (
+                                            <FormItem className="mb-2">
+                                                <Label htmlFor='text' className='font-bold text-sm'>Email</Label>
+                                                <FormControl>
+                                                    <Input
+                                                        type='text'
+                                                        placeholder='Digite seu email'
+                                                        className='rounded-none border-l-4 border-l-principal'
+                                                        {...field}
+                                                    />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                    <FormField
+                                        control={loginForm.control}
+                                        name="password"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <Label htmlFor='password' className='font-bold text-sm'>Senha</Label>
+                                                <FormControl>
+                                                    <Input
+                                                        type='password'
+                                                        placeholder='Digite sua senha'
+                                                        className='rounded-none border-l-4 border-l-principal'
+                                                        {...field}
+                                                    />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
 
-                            <FormField
+                                    <div>
+                                    <a href="" className="underline text-sm">Esqueci minha senha</a>
 
-                                control={loginForm.control}
-                                name="password"
-                                render={({ field }) => {
-                                    return (
-                                        <FormItem>
-                                            <Label htmlFor='password' className='font-bold text-sm'>Senha</Label>
-                                            <FormControl>
-                                                <Input type='password' placeholder='Digite sua senha' className='rounded-none border-l-4 border-l-principal' {...field} />
-                                            </FormControl>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )
-
-                                }}
-                            />
-                            <div className='flex justify-end'>
-                                <Button type="submit" className='bg-principal mt-5 text-slate-50 font-normal rounded-none' disabled={loading}>
-                                    {loading ? <Loader2 className="animate-spin h-5 w-5" /> : (
-                                        <div style={{ display: 'flex', alignItems: 'center' }}>
-                                            <span>Login</span>
-                                            <SquareArrowRight className="ml-2 size-4" />
-                                        </div>
-                                    )}
-                                </Button>
-                            </div>
-                        </form>
-                    </Form>
+                                    <div className='flex justify-end'>
+                                        <Button
+                                            type="submit"
+                                            className='bg-principal mt-5 text-white font-normal rounded-full shadow-md'
+                                            disabled={loading}
+                                        >
+                                            {loading ? (
+                                                <Loader2 className="animate-spin h-5 w-5" />
+                                            ) : (
+                                                <div style={{ display: 'flex', alignItems: 'center' }}>
+                                                    <span>Entrar</span>
+                                                    <SquareArrowRight className="ml-2 size-4 " />
+                                                </div>
+                                            )}
+                                        </Button>
+                                    </div>
+                                    </div>
+                                
+                                </form>
+                            </Form>
+                        </div>
+                    </div>
                 </div>
-            </div >
+            </div>
         </>
-
     );
-
 }

@@ -1,6 +1,7 @@
 'use client';
 
 import { ProductType, ProductsType } from "@/app/api/product/route";
+import { LoadingSkeleton } from "@/components/ui/loading-skeleton";
 import { frontendAPI } from "@/lib/api";
 import { useEffect, useState } from "react";
 import React, { createContext } from "react";
@@ -20,7 +21,6 @@ async function getData(): Promise<ProductType[]> {
   
       if(products){
         data = products;
-        const { id, name, price, amount } = result.data;
       }
       
     } catch (error) {
@@ -37,10 +37,12 @@ export const ProductsContext = createContext({} as ProductsContextType);
 export function ProductsContextProvider({children}: {children: React.ReactNode}){
 
     const [products, setProducts] = useState<ProductType[]>([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
       getData().then((response) => {
         setProducts(response);
+        setLoading(false);
       });
     }, []);
 
@@ -53,7 +55,7 @@ export function ProductsContextProvider({children}: {children: React.ReactNode})
 
     return (
         <ProductsContext.Provider value={{products, refreshTable}}>
-                {children}
+                {!loading ? children : <LoadingSkeleton/>}
         </ProductsContext.Provider>
     )
 }

@@ -78,8 +78,8 @@ export function DeleteButton({ id }: DeleteButtonProps) {
                     <DialogClose asChild>
                         <Button type="button" variant={"destructive"} className="text-white bg-red-800">Cancelar</Button>
                     </DialogClose>
-                    <Button className="" key={id} variant={"ghost"} disabled={loading} onClick={async () => await removeProduct(id)}>
-                        {loading ? <Loader2 className="animate-spin h-5 w-5" /> : <h1 className="hover:text-red-800">Excluir</h1>}
+                    <Button className="mb-2 hover:text-red-800" key={id} variant={"ghost"} disabled={loading} onClick={async () => await removeProduct(id)}>
+                        {loading ? <Loader2 className="animate-spin h-5 w-5" /> : <h1>Excluir</h1>}
                     </Button>
                 </DialogFooter>
             </DialogContent>

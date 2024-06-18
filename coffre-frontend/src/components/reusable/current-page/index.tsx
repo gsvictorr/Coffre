@@ -15,7 +15,7 @@ const CurrentPage: React.FC<CurrentPageProps> = ({ path, name }) => {
             <Navigation className="font-bold" size={14} />
             <p className="text-principal font-bold">Coffre </p>
             <ChevronRight size={14}/>
-            <a href={path} >{name}</a>
+            <a href={path} className="underline text-black dark:text-white" >{name}</a>
         </div>
             <ThemeSwitcher></ThemeSwitcher>
         </div>
