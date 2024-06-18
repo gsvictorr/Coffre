@@ -64,7 +64,7 @@ export function DataTable<TData, TValue>({
       <div className="flex items-center">
         <div className="flex gap-2 items-center mb-4">
           <Input type="text" placeholder="Nome do usuário" value={filterValue}
-            onChange={(event) => setFilterValue(event.target.value)} className="w-80">
+            onChange={(event) => setFilterValue(event.target.value)} className="w-60">
           </Input>
           <Button onClick={applyFilter} variant={"link"} className="text-principal">
             <Search className="2-4 h-4 mr-2 text-principal"></Search>

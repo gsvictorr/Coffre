@@ -95,7 +95,7 @@ export function ProductAddForm() {
                 {message}
                 <Dialog>
                     <DialogTrigger>
-                        <Button className="bg-principal text-white">
+                        <Button className="bg-principal text-white rounded-full shadow-md">
                             <PlusCircle className="w-4 h-4 mr-1"></PlusCircle>
                             Novo produto</Button>
                     </DialogTrigger>
@@ -166,7 +166,7 @@ export function ProductAddForm() {
                                         <Button type="button" variant={"outline"}>Cancelar</Button>
                                     </DialogClose>
                                     <DialogClose>
-                                        <Button type="submit" className="bg-principal text-white" disabled={loading}>{loading ? <Loader2 className="animate-spin h-5 w-5 " /> : "Cadastrar"}</Button>
+                                        <Button type="submit" className="bg-principal text-white w-full mb-2" disabled={loading}>{loading ? <Loader2 className="animate-spin h-5 w-5 " /> : "Cadastrar"}</Button>
                                     </DialogClose>
                                 </DialogFooter>
                             </form>

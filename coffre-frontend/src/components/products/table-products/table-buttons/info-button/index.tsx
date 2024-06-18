@@ -120,7 +120,7 @@ export function InfoButton({ id }: InfoButtonProps) {
                 <Button variant={"ghost"} key={id} onClick={async () => {
                     await getProduct(id);
                 }} className="text-base bg-transparent shadow-none">
-                    <Eye className="size-4 text-black"></Eye>
+                    <Eye className="size-4 text-black dark:text-white"></Eye>
                 </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">

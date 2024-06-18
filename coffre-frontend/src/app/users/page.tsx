@@ -1,3 +1,4 @@
+'use client';
 import CurrentPage from "@/components/reusable/current-page";
 import { UserTable } from "@/components/users/table-users";
 import { UserAddForm } from "@/components/users/user-add-form";

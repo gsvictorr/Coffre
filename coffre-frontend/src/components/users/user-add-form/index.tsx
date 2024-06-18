@@ -98,7 +98,7 @@ export function UserAddForm() {
             <Dialog>
                 <DialogTrigger>
                     <Button className="bg-principal text-white">
-                        <PlusCircle className="w-4 h-4 mr-1"></PlusCircle>
+                        <PlusCircle className="size-4 mr-1"></PlusCircle>
                         Novo usuário</Button>
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[425px]">
@@ -150,18 +150,18 @@ export function UserAddForm() {
                                 render={({ field }) => {
                                     return (
                                         <div className="grid items-center">
-                                           <FormItem>
-    <Label htmlFor="role">Tipo (selecione)</Label>
-    <FormControl>
-        <div>
-        <select id="role" className="w-80 p-1 pl-3 appearance-none border border-1 border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-principal" {...field}>
-            <option value="USER">Usuário</option>
-            <option value="ADMIN">Administrador</option>
-        </select>
-        </div>
-    </FormControl>
-    <FormMessage />
-</FormItem>
+                                            <FormItem>
+                                                <Label htmlFor="role">Tipo (selecione)</Label>
+                                                <FormControl>
+                                                    <div>
+                                                        <select id="role" className="w-80 p-1 pl-3 appearance-none border border-1 border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-principal" {...field}>
+                                                            <option value="USER">Usuário</option>
+                                                            <option value="ADMIN">Administrador</option>
+                                                        </select>
+                                                    </div>
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
                                         </div>
                                     )
                                 }}
