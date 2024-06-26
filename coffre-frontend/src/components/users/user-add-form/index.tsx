@@ -97,7 +97,7 @@ export function UserAddForm() {
             {message}
             <Dialog>
                 <DialogTrigger>
-                    <Button className="bg-principal text-white">
+                    <Button className="bg-principal text-white rounded-full mr-4 shadow-md">
                         <PlusCircle className="size-4 mr-1"></PlusCircle>
                         Novo usuário</Button>
                 </DialogTrigger>

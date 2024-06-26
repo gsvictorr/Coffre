@@ -15,7 +15,7 @@ export function UserTable() {
   const users = usersContext.users;
 
   return (
-    <div className="max-auto py-10">
+    <div className="max-y-auto max-w-auto py-10">
       {users.length === 0 ? (
         <LoadingSkeleton/>
       ) : (

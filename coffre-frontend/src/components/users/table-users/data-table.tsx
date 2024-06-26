@@ -60,11 +60,11 @@ export function DataTable<TData, TValue>({
   const totalUsers = data.length;
 
   return (
-    <div>
-      <div className="flex items-center">
-        <div className="flex gap-2 items-center mb-4">
+    <div className=" overflow-x-hidden">
+      <div className="flex items-center md:justify-start  justify-center">
+        <div className="flex items-center mb-4 mt-2 justify-center">
           <Input type="text" placeholder="Nome do usuário" value={filterValue}
-            onChange={(event) => setFilterValue(event.target.value)} className="w-60">
+            onChange={(event) => setFilterValue(event.target.value)} className="md:w-60 w-48">
           </Input>
           <Button onClick={applyFilter} variant={"link"} className="text-principal">
             <Search className="2-4 h-4 mr-2 text-principal"></Search>
@@ -117,7 +117,7 @@ export function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-      <div className="flex items-center justify-end space-x-1 py-2">
+      <div className="flex items-center md:justify-end justify-center space-x-1 py-2">
         <span className="uppercase mr-4 text-principal font-bold">Total: <span className="text-black font-normal">{totalUsers}</span></span>
         <Button
           variant="outline"

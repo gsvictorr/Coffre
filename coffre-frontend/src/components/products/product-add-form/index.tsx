@@ -95,7 +95,7 @@ export function ProductAddForm() {
                 {message}
                 <Dialog>
                     <DialogTrigger>
-                        <Button className="bg-principal text-white rounded-full shadow-md">
+                        <Button className="bg-principal text-white rounded-full shadow-md mr-4">
                             <PlusCircle className="w-4 h-4 mr-1"></PlusCircle>
                             Novo produto</Button>
                     </DialogTrigger>

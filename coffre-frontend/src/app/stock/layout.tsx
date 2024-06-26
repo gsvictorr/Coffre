@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function StockLayout({ children }: { children: React.ReactNode }) {
     return (
         <>
-            <div className="md:ml-64 md:p-4 mt-16 md:mt-0">
+            <div className="md:ml-64 md:p-4 mt-16 md:mt-0 max-w-full">
             <Sidebar></Sidebar>
                 {children}
             </div>

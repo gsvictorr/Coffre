@@ -12,11 +12,11 @@ export function ProductTable() {
   const products = productContext.products;
 
   return (
-    <div className="max-auto py-10">
+    <div className="py-10">
       {products.length === 0 ? (
         <LoadingSkeleton/>
       ) : (
-        <DataTable columns={columns} data={products} />   
+        <DataTable columns={columns} data={products}/>   
       )}
     </div>
   )

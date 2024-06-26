@@ -1,8 +1,8 @@
 'use client';
 
 import CurrentPage from "@/components/reusable/current-page";
-import { frontendAPI } from "@/lib/api";
-import { useEffect, useState } from "react";
+import { AuthContext } from "@/context/auth-context";
+import { useContext } from "react";
 
 
 export default function Dashboard(){
@@ -15,37 +15,12 @@ export default function Dashboard(){
         return `${day}/${month}/${year}`;
       };
 
-    
-    const [nameUser, setNameUser] = useState("");
-
-    useEffect(() => {
-        const fetchName = async () => {
-            try {
-                const storedName = localStorage.getItem("userName");
-                if (storedName) {
-                    setNameUser(storedName);
-                }
-
-                const response = await frontendAPI.get("/user/info");
-                const newName = response.data.name;
-                const newEmail = response.data.email;
-                if (storedName !== newName) {
-                    setNameUser(newName);
-                    localStorage.setItem("userName", newName);
-                }
-
-            } catch (error) {
-                console.error("Erro ao obter o nome do usuário:", error);
-            }
-        };
-    
-        fetchName();
-    }, []);
+      const { user } = useContext(AuthContext);
 
     return(
         <>
             <CurrentPage path={"dashboard"} name={"Dashboard"}></CurrentPage>
-            <h1 className="text-2xl">Seja bem-vindo(a), {nameUser}!</h1>
+            <h1 className="text-2xl">Seja bem-vindo(a), {user?.name}!</h1>
             <p className="text-sm">Exibindo atualizações de {formatDate(today)}</p>
         </>
     );
