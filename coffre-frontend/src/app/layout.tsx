@@ -5,7 +5,6 @@ import ThemeProvider from "@/providers/theme-provider";
 import { AuthContextProvider } from "@/context/auth-context";
 import { cn } from "@/lib/utils";
 
-
 const roboto = Roboto({ weight: "400", subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -29,7 +28,7 @@ export default function RootLayout({
         <AuthContextProvider>
         <html lang="pt-BR">
           <body className={cn(roboto.className)}>
-            <div className="flex h-screen w-full">
+            <div className="flex h-full max-w-full">
               <div className="flex flex-col w-full h-full">
               <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
               {children}

@@ -49,4 +49,22 @@
     --input: 240 3.7% 15.9%;
     --ring: 142.4 71.8% 29.2%;
   }
+
+  @layer utilities {
+    .slideIn {
+      animation: slideInFromTop 0.5s ease-in-out forwards;
+  }
+  
+  @keyframes slideInFromTop {
+      0% {
+          transform: translateY(-100%);
+          opacity: 0;
+      }
+      100% {
+          transform: translateY(0);
+          opacity: 1;
+      }
+  }
+  }
+
 }

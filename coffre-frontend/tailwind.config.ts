@@ -19,6 +19,7 @@ const config = {
     },
     extend: {
       colors: {
+        bgdark: "hsl(20,14.3%,4.1%)",
         principal: "#005502",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
