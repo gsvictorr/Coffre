@@ -8,7 +8,6 @@ public class FormatedDate {
     
     String date = "";
 
-    // return date dd/mm/yyyy
     public String verifyDate(){
         Date currentDate = new Date();
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
@@ -16,7 +15,6 @@ public class FormatedDate {
         return date;
     }
 
-    // return complete date
     public String verifyCompleteDate(){
         Date currentDate = new Date();
         DateFormat dateFull = DateFormat.getDateInstance(DateFormat.FULL);

@@ -19,7 +19,7 @@ public class AuthService implements UserDetailsService{
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException{
 
         if (userRepository.findByEmail(email) == null) {
-            throw new LoginException("Usuário não encontrado");
+            throw new LoginException("Usuário inexistente ou senha inválida");
         } else {
             return userRepository.findByEmail(email);
         }

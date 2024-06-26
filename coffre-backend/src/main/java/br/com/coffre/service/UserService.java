@@ -88,7 +88,7 @@ public class UserService {
         Optional<User> newInfo = userRepository.findById(id);
 
         if (newInfo.isPresent()) {
-            UserInfo userInfo = new UserInfo(newInfo.get().getId(), newInfo.get().getName(), newInfo.get().getEmail());
+            UserInfo userInfo = new UserInfo(newInfo.get().getId(), newInfo.get().getName(), newInfo.get().getEmail(), newInfo.get().getRole());
 
             return userInfo;
         } else {
